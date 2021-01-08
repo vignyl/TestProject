@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container body-content">
+        @if (TempData["result_code"] != null)
+        {
+            <div id="splashMsg" class="animated bounceInRight" style="position: absolute; top: 100; right: 15px;z-index: 1000;">
+                <span style="border-radius: 0;" class="alert alert-@(TempData["result_code"].Equals(1) ? "success" : "danger")"><i class="fa fa-@(TempData["result_code"].Equals(1) ? "check" : "ban")"></i> @TempData["message"]</span>
+                <span onclick="closeSplash();" class="fa fa-times" style="position: absolute; top: -9px; right: 5px; color: #fff;cursor: pointer"></span>
+            </div>
+        }
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - TEST APP</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+@RenderSection("scripts", required: false)
+
+<script type="text/javascript">
+    $(document).ready(function () { 
+        setTimeout(function () {
+            closeSplash();
+        }, 5000); // <-- time in milliseconds
+
+        $("#imgInput").change(function () {
+            readURL(this);
+        });
+    });
+
+    function closeSplash() {
+        $('#splashMsg').removeClass('bounceInRight').addClass("bounceOutRight");
+    }
+    /*
+     * source : l'id ou la classe qui écoute l'evenement
+     * imgPreviw : le src qui recoit l'affichage
+     * desc : le texte descriptif de l'image
+     *
+     */
+    function readURL(input, dest = '#previewImg') {
+        //console.log(dest);
+        //console.log(input);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(dest).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    } 
+</script>

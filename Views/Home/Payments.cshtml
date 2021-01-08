@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TestProject.Models.FirstModel.Payment>
+@{
+    ViewBag.Title = "Payments";
+}
+
+<h2>Payments list</h2>
+
+
+<div class="">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped datatable dtable2">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.code)
+                    </th>
+                    <th>
+                        Payer
+                    </th>
+                    <th>
+                        Fixed amount
+                    </th>
+                    <th>
+                        Amount paid
+                    </th>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>#@item.id</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.code)
+                        </td>
+                        <td>
+                            @item.User.full_name
+                        </td>
+                        <td>
+                            $ @Html.DisplayFor(modelItem => item.original_amount)
+                        </td>
+                        <td>
+                            $ @Html.DisplayFor(modelItem => item.amount)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>
